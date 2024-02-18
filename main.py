@@ -4,31 +4,36 @@ from graph import Graph
 from kruskal import kruskal
 from networkx_graph import print_graph
 
-with open('input/postes_recife.csv', newline='') as csvfile:
-    spamreader = csv.DictReader(csvfile, delimiter=',')
+edges = []
+max_lines = 100
+max_number = 0
+
+with open('input/soc-sign-bitcoinotc.csv', newline='') as csvfile:
+    spamreader = csv.reader(csvfile, delimiter=',')
 
     for row in spamreader:
-        print(row['\ufeff_id'], row['ID PONTO'], row['LATITUDE'], row['LONGITUDE'])
+        if spamreader.line_num > max_lines:
+           break
 
-graph = Graph('initial_graph')
+        source = int(row[0])
+        target = int(row[1])
+        rating = max(int(row[2]), 0)
 
-graph.add_edge(0, 1, 4)
-graph.add_edge(0, 2, 4)
-graph.add_edge(1, 2, 2)
-graph.add_edge(1, 0, 4)
-graph.add_edge(2, 0, 4)
-graph.add_edge(2, 1, 2)
-graph.add_edge(2, 3, 3)
-graph.add_edge(2, 5, 2)
-graph.add_edge(2, 4, 4)
-graph.add_edge(3, 2, 3)
-graph.add_edge(3, 4, 3)
-graph.add_edge(4, 2, 4)
-graph.add_edge(4, 3, 3)
-graph.add_edge(5, 2, 2)
-graph.add_edge(5, 4, 3)
+        max_number = max(source, target, max_number)
+
+        source -= 1
+        target -= 1
+
+        edges.append([source, target, rating])
+
+graph = Graph('initial_graph', max_number)
+
+for source, target, rating in edges:
+    graph.add_edge(source, target, rating)
 
 minimum_graph = kruskal(graph)
+
+print('Gerei o grafo')
 
 print_graph(graph)
 print_graph(minimum_graph)

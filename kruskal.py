@@ -10,11 +10,12 @@ def kruskal(graph: Graph):
     parent = []
     rank = []
 
-    for node in range(graph.get_num_vertices()):
+    for node in range(graph.num_vertex):
         parent.append(node)
         rank.append(0)
 
-    while e < graph.get_num_vertices() - 1:
+
+    while e < graph.num_vertex - 1 and i < len(sorted_graph):
         u, v, w = sorted_graph[i]
         i = i + 1
         x = find(parent, u)
@@ -25,7 +26,7 @@ def kruskal(graph: Graph):
             result.append([u, v, w])
             apply_union(parent, rank, x, y)
 
-    new_graph = Graph('minimum_graph')
+    new_graph = Graph('minimum_graph', len(result))
 
     for u, v, weight in result:
         new_graph.add_edge(u, v, weight)
@@ -35,6 +36,7 @@ def kruskal(graph: Graph):
 def find(parent, i):
     if parent[i] == i:
         return i
+
     return find(parent, parent[i])
 
 def apply_union(parent, rank, x, y):
