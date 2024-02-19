@@ -17,7 +17,7 @@ with open('input/soc-sign-bitcoinotc.csv', newline='') as csvfile:
 
         source = int(row[0])
         target = int(row[1])
-        rating = max(int(row[2]), 0)
+        rating = int(row[2])
 
         max_number = max(source, target, max_number)
 
