@@ -33,7 +33,5 @@ for source, target, rating in edges:
 
 minimum_graph = kruskal(graph)
 
-print('Gerei o grafo')
-
 print_graph(graph)
 print_graph(minimum_graph)
